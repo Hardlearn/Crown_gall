@@ -4,7 +4,7 @@
 
 > 文件放置在./Crown_gall/0_database_result/路径下
 
-![image-20210415103758960](C:\Users\13284\AppData\Roaming\Typora\typora-user-images\image-20210415103758960.png)
+![Image text](https://raw.github.com/Hardlearn/Crown_gall/IMG-Folder/image-20210415103758960.png)
 
 ![image-20210415103821912](C:\Users\13284\AppData\Roaming\Typora\typora-user-images\image-20210415103821912.png)
 
