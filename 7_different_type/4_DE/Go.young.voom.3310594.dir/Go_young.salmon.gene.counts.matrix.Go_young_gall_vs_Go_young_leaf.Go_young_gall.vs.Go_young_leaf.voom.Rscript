@@ -1,0 +1,33 @@
+library(edgeR)
+library(limma)
+
+data = read.table("/mnt/sdb1/home/huanghaoran/diff_gall_type/Glochidion_obovatum/Differential_Expression/Go_young.salmon.gene.counts.matrix", header=T, row.names=1, com='')
+col_ordering = c(1,2,3,4,5,6)
+rnaseqMatrix = data[,col_ordering]
+rnaseqMatrix = round(rnaseqMatrix)
+rnaseqMatrix = rnaseqMatrix[rowSums(cpm(rnaseqMatrix) > 1) >= 2,]
+conditions = factor(c(rep("Go_young_gall", 3), rep("Go_young_leaf", 3)))
+
+design = model.matrix(~conditions)
+## TMM normalize data
+lib_sizes = colSums(rnaseqMatrix)
+tmm_norm_factors = calcNormFactors(rnaseqMatrix, method='TMM')
+x = DGEList(counts=rnaseqMatrix)
+# voom transformation
+y = voom(x, design, lib.size=lib_sizes*tmm_norm_factors, plot=F)
+fit = eBayes(lmFit(y,design))
+tTags = topTable(fit,coef=2,number=Inf)
+# output results, including average expression val for each feature
+c = cpm(x)
+m = apply(c, 1, mean)
+tTags$logFC = -1 * tTags$logFC  # make A/B instead of B/A
+tTags2 = cbind(tTags, logCPM=log2(m[rownames(tTags)]))
+DE_matrix = data.frame(sampleA="Go_young_gall", sampleB="Go_young_leaf", logFC=tTags$logFC, logCPM=tTags2$logCPM, PValue=tTags$'P.Value', FDR=tTags$'adj.P.Val')
+rownames(DE_matrix) = rownames(tTags)
+write.table(DE_matrix, file='Go_young.salmon.gene.counts.matrix.Go_young_gall_vs_Go_young_leaf.voom.DE_results', sep='	', quote=F, row.names=T)
+write.table(rnaseqMatrix, file='Go_young.salmon.gene.counts.matrix.Go_young_gall_vs_Go_young_leaf.voom.count_matrix', sep='	', quote=F, row.names=T)
+# MA and volcano plots
+source("/mnt/sdb1/home/huanghaoran/software/trinityrnaseq-v2.12.0/Analysis/DifferentialExpression/R/rnaseq_plot_funcs.R")
+pdf("Go_young.salmon.gene.counts.matrix.Go_young_gall_vs_Go_young_leaf.voom.DE_results.MA_n_Volcano.pdf")
+plot_MA_and_Volcano(rownames(tTags2), tTags2$logCPM, tTags$logFC, tTags$'adj.P.Val')
+dev.off()
