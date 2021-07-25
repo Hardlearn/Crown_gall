@@ -12,3 +12,21 @@
 # 3. 差异表达分析
 
 使用Trinity中的脚本进行分析。具体参考：https://github.com/trinityrnaseq/trinityrnaseq/wiki/Trinity-Differential-Expression
+
+# 4. GO富集分析
+
+对不同物种肿瘤的差异表达基因进行GO富集分析，并计算GOTERM的年龄。
+
+> 结果及处理脚本于./5_enrichGO中
+
+# 5. GOTERM logFC
+
+比较能成功注释年龄的GOTERM中UC基因表达量与MC基因的表达量。
+
+Am：
+![Image](https://github.com/Hardlearn/Crown_gall/blob/main/7_different_type/6_GOFC/6_GOFC/Am_logFC.png)
+
+Ej：差异表达基因过少，富集通路过少，无法计算GOTERM的年龄，所以没有进行此分析
+
+Go_mature(Go_young情况与Ej一致):
+![Image](https://github.com/Hardlearn/Crown_gall/blob/main/7_different_type/6_GOFC/6_GOFC/Go_mature_logFC.png)
