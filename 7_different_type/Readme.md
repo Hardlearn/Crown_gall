@@ -21,12 +21,16 @@
 
 # 5. GOTERM logFC
 
-比较能成功注释年龄的GOTERM中UC基因表达量与MC基因的表达量。
+比较能成功注释年龄的GOTERM中UC基因表达量与MC基因的表达量的logFC。
 
 Am：
+
 ![Image](https://github.com/Hardlearn/Crown_gall/blob/main/7_different_type/6_GOFC/6_GOFC/Am_logFC.png)
+
 
 Ej：差异表达基因过少，富集通路过少，无法计算GOTERM的年龄，所以没有进行此分析
 
+
 Go_mature(Go_young情况与Ej一致):
+
 ![Image](https://github.com/Hardlearn/Crown_gall/blob/main/7_different_type/6_GOFC/6_GOFC/Go_mature_logFC.png)
